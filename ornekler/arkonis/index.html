@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arkonis Metal Örnek Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: technical-sheet look — ruled sections, spec tables, one amber signal colour */
+  --ink: #16202a;
+  --steel: #5b6873;
+  --line: #d3d8dc;
+  --paper: #f4f5f3;
+  --panel: #ffffff;
+  --signal: #e08a12;
+  --deep: #0f2f3f;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--body); }
+a { color: var(--deep); }
+img { max-width: 100%; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.concept { background: var(--signal); color: #1b1203; font: 500 13px/1.4 var(--mono); text-align: center; padding: 8px 16px; }
+header.top { background: var(--deep); color: #fff; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; font: 700 24px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; }
+.logo svg { flex: none; }
+nav { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+nav a { color: #dce6ea; text-decoration: none; font-size: 14px; }
+nav a:hover, nav a:focus-visible { color: #fff; text-decoration: underline; }
+.lang { display: inline-flex; border: 1px solid #4d6f7f; border-radius: 4px; overflow: hidden; }
+.lang button { background: none; border: 0; color: #dce6ea; font: 500 13px var(--mono); padding: 5px 10px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--signal); color: #1b1203; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.hero { background: var(--deep); color: #fff; padding: 40px 0 48px; border-bottom: 4px solid var(--signal); }
+.hero .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: end; }
+.eyebrow { font: 500 13px var(--mono); color: #9fc0cc; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; }
+h1 { font: 700 clamp(36px, 5vw, 56px)/1.02 var(--display); margin: 0 0 16px; text-wrap: balance; text-transform: uppercase; }
+.hero p.lead { font-size: 18px; color: #d6e2e7; max-width: 58ch; margin: 0 0 24px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 12px 20px; border-radius: 4px; font-weight: 600; text-decoration: none; border: 2px solid var(--signal); }
+.btn.primary { background: var(--signal); color: #1b1203; }
+.btn.ghost { color: #fff; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #2f5566; }
+.facts div { padding: 16px; border: 1px solid #2f5566; }
+.facts b { display: block; font: 600 32px/1 var(--display); color: #fff; font-variant-numeric: tabular-nums; }
+.facts span { font-size: 13px; color: #9fc0cc; }
+
+section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+.sec-head { display: flex; gap: 16px; align-items: baseline; margin-bottom: 28px; flex-wrap: wrap; }
+.sec-head .no { font: 500 14px var(--mono); color: var(--signal); }
+h2 { font: 700 34px/1.1 var(--display); margin: 0; text-transform: uppercase; text-wrap: balance; }
+.sec-head p { margin: 0; color: var(--steel); flex-basis: 100%; max-width: 65ch; }
+
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--deep); padding: 20px; }
+.card h3 { font: 600 22px/1.15 var(--display); margin: 0 0 8px; text-transform: uppercase; }
+.card p { margin: 0 0 12px; color: #33414c; }
+.card ul { margin: 0; padding-left: 18px; color: var(--steel); font-size: 14px; }
+
+.spec-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--steel); background: #eef0ef; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid var(--line); background: var(--panel); }
+.steps li { padding: 18px; border-right: 1px solid var(--line); }
+.steps li:last-child { border-right: 0; }
+.steps .n { font: 500 13px var(--mono); color: var(--signal); }
+.steps b { display: block; font: 600 20px/1.15 var(--display); text-transform: uppercase; margin: 6px 0; }
+.steps span { font-size: 14px; color: var(--steel); }
+
+.quality { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.badge { border: 1px solid var(--deep); padding: 10px 14px; font: 500 14px var(--mono); background: var(--panel); }
+.markets { columns: 2; padding-left: 18px; margin: 0; color: #33414c; }
+
+.contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; }
+form { background: var(--panel); border: 1px solid var(--line); padding: 20px; display: grid; gap: 14px; }
+label { font-size: 13px; font-weight: 600; display: grid; gap: 6px; }
+input, textarea, select { font: inherit; padding: 10px 12px; border: 1px solid #b9c1c7; border-radius: 3px; background: #fff; color: var(--ink); }
+textarea { min-height: 110px; resize: vertical; }
+.form-note { font-size: 14px; padding: 12px; border-left: 3px solid var(--signal); background: #fff7ea; display: none; }
+.form-note.show { display: block; }
+dl.addr { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; }
+dl.addr dt { font: 500 12px var(--mono); text-transform: uppercase; color: var(--steel); padding-top: 3px; }
+dl.addr dd { margin: 0; }
+
+footer { padding: 28px 0 40px; color: var(--steel); font-size: 13px; }
+
+@media (max-width: 860px) {
+  .hero .wrap, .quality, .contact { grid-template-columns: 1fr; }
+  .grid3 { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr; }
+  .steps li { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 520px) {
+  .grid3 { grid-template-columns: 1fr; }
+  .markets { columns: 1; }
+  nav a { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<div class="concept" data-tr="Örnek çalışma: Arkonis Metal hayali bir firmadır. Rakamlar ve bilgiler temsilidir.">Sample project: Arkonis Metal is a fictional company. All figures are illustrative.</div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke="#e08a12" stroke-width="2"/><path d="M7 23 L15 7 L23 23 M10.5 17 H19.5" fill="none" stroke="#fff" stroke-width="2.4"/></svg>
+      Arkonis Metal
+    </div>
+    <nav aria-label="Main">
+      <a href="#capabilities" data-tr="Yetkinlikler">Capabilities</a>
+      <a href="#machines" data-tr="Makine parkı">Machine park</a>
+      <a href="#quality" data-tr="Kalite">Quality</a>
+      <a href="#contact" data-tr="Teklif iste">Request a quote</a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="btn-en" aria-pressed="true">EN</button>
+        <button type="button" id="btn-tr" aria-pressed="false">TR</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" data-tr="Sakarya, Türkiye · 2009'dan beri">Sakarya, Türkiye · since 2009</p>
+      <h1 data-tr="Otomotiv tedarik zinciri için hassas işlenmiş parçalar">Precision-machined parts for the automotive supply chain</h1>
+      <p class="lead" data-tr="Çelik ve alüminyumdan CNC torna ve freze parçaları üretiyoruz. Numuneden seri üretime, çizimden sevkiyata kadar tek muhatap.">We produce CNC-turned and milled components in steel and aluminium. One partner from drawing review to serial delivery.</p>
+      <div class="cta">
+        <a class="btn primary" href="#contact" data-tr="Çizim gönder, teklif al">Send a drawing, get a quote</a>
+        <a class="btn ghost" href="#machines" data-tr="Kapasiteyi gör">See our capacity</a>
+      </div>
+    </div>
+    <div class="facts" aria-label="Key figures">
+      <div><b>24</b><span data-tr="CNC tezgâh">CNC machines</span></div>
+      <div><b>±0.01 mm</b><span data-tr="tipik tolerans">typical tolerance</span></div>
+      <div><b data-tr="%70">70%</b><span data-tr="ihracat payı">export share</span></div>
+      <div><b>18</b><span data-tr="ihracat ülkesi">export countries</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+<section id="capabilities">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">01</span>
+      <h2 data-tr="Yetkinlikler">Capabilities</h2>
+      <p data-tr="Alıcıların ilk sorduğu üç soruya burada cevap veriyoruz: ne üretiyorsunuz, hangi malzemeyle, hangi adetlerde.">The three questions buyers ask first: what you make, in which materials, at what volumes.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <h3 data-tr="CNC torna">CNC turning</h3>
+        <p data-tr="Ø4–Ø120 mm çaplarda mil, burç ve bağlantı parçaları.">Shafts, bushings and fittings from Ø4 to Ø120 mm.</p>
+        <ul>
+          <li data-tr="Çubuktan otomatik besleme">Automatic bar feeding</li>
+          <li data-tr="Yıllık 50 bin–2 milyon adet">50k–2M pcs per year</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 data-tr="CNC freze">CNC milling</h3>
+        <p data-tr="3 ve 5 eksende gövde, braket ve flanş parçaları.">Housings, brackets and flanges on 3- and 5-axis centres.</p>
+        <ul>
+          <li data-tr="En büyük iş parçası 800×500 mm">Max. part size 800×500 mm</li>
+          <li data-tr="Prototipten seriye">Prototype to series</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 data-tr="Malzeme ve yüzey">Materials and finishing</h3>
+        <p data-tr="Otomat çeliği, paslanmaz, 6000 ve 7000 serisi alüminyum.">Free-cutting steel, stainless, 6000- and 7000-series aluminium.</p>
+        <ul>
+          <li data-tr="Eloksal ve çinko kaplama (iş ortaklarıyla)">Anodising and zinc plating via partners</li>
+          <li data-tr="Malzeme sertifikası her sevkiyatta">Material certificates with every shipment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="machines">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">02</span>
+      <h2 data-tr="Makine parkı">Machine park</h2>
+      <p data-tr="Satın alma uzmanları kapasiteyi rakamla görmek ister. Tablo bu yüzden sitede açık duruyor.">Purchasing teams want capacity in numbers, so the list is public.</p>
+    </div>
+    <div class="spec-wrap">
+      <table>
+        <thead>
+          <tr><th data-tr="Tezgâh tipi">Machine type</th><th data-tr="Adet">Units</th><th data-tr="Çalışma alanı">Working range</th><th data-tr="Kullanım">Used for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td data-tr="CNC torna, çubuk beslemeli">CNC lathe, bar-fed</td><td class="num">10</td><td class="num">Ø4–Ø65 mm</td><td data-tr="Seri mil ve burç">Serial shafts and bushings</td></tr>
+          <tr><td data-tr="CNC torna, ayna tipi">CNC lathe, chuck type</td><td class="num">4</td><td class="num">Ø40–Ø120 mm</td><td data-tr="Flanş ve göbek">Flanges and hubs</td></tr>
+          <tr><td data-tr="3 eksen dik işleme merkezi">3-axis vertical machining centre</td><td class="num">7</td><td class="num">800×500×500 mm</td><td data-tr="Gövde ve braket">Housings and brackets</td></tr>
+          <tr><td data-tr="5 eksen işleme merkezi">5-axis machining centre</td><td class="num">3</td><td class="num">Ø500×400 mm</td><td data-tr="Karmaşık geometri">Complex geometry</td></tr>
+          <tr><td data-tr="Koordinat ölçüm makinesi (CMM)">Coordinate measuring machine (CMM)</td><td class="num">2</td><td class="num">1000×700×600 mm</td><td data-tr="İlk numune ve seri kontrol">First article and series inspection</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">03</span>
+      <h2 data-tr="Siparişten sevkiyata">From enquiry to delivery</h2>
+    </div>
+    <ol class="steps">
+      <li><span class="n">01</span><b data-tr="Çizim">Drawing</b><span data-tr="STEP veya PDF çiziminizi gönderin">Send your STEP or PDF drawing</span></li>
+      <li><span class="n">02</span><b data-tr="Teklif">Quote</b><span data-tr="48 saat içinde fiyat ve termin">Price and lead time within 48 h</span></li>
+      <li><span class="n">03</span><b data-tr="Numune">Sample</b><span data-tr="İlk numune ve ölçüm raporu">First article with inspection report</span></li>
+      <li><span class="n">04</span><b data-tr="Onay">Approval</b><span data-tr="PPAP dosyası, talep edilirse">PPAP documentation on request</span></li>
+      <li><span class="n">05</span><b data-tr="Seri üretim">Series</b><span data-tr="Planlı sevkiyat, Avrupa'ya karayolu">Scheduled delivery by road to Europe</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="quality">
+  <div class="wrap quality">
+    <div>
+      <div class="sec-head">
+        <span class="no">04</span>
+        <h2 data-tr="Kalite ve belgeler">Quality and certificates</h2>
+        <p data-tr="Örnek çalışmadır; gerçek bir firmada buraya firmanın geçerli belgeleri ve numaraları yazılır.">Sample only: a real company lists its valid certificates and numbers here.</p>
+      </div>
+      <div class="badges">
+        <span class="badge">IATF 16949</span>
+        <span class="badge">ISO 9001</span>
+        <span class="badge">ISO 14001</span>
+        <span class="badge" data-tr="Malzeme sertifikası 3.1">Material cert. EN 10204 3.1</span>
+      </div>
+    </div>
+    <div>
+      <div class="sec-head">
+        <span class="no">05</span>
+        <h2 data-tr="Pazarlar">Markets</h2>
+      </div>
+      <ul class="markets">
+        <li data-tr="Almanya">Germany</li>
+        <li data-tr="Fransa">France</li>
+        <li data-tr="Polonya">Poland</li>
+        <li data-tr="İspanya">Spain</li>
+        <li data-tr="İtalya">Italy</li>
+        <li data-tr="Romanya">Romania</li>
+        <li data-tr="Birleşik Krallık">United Kingdom</li>
+        <li data-tr="Türkiye">Türkiye</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <div>
+      <div class="sec-head">
+        <span class="no">06</span>
+        <h2 data-tr="Teklif iste">Request a quote</h2>
+        <p data-tr="Çiziminizi ve yıllık adedinizi yazın; satış mühendisimiz 48 saat içinde dönsün.">Tell us the part and annual volume; a sales engineer replies within 48 hours.</p>
+      </div>
+      <dl class="addr">
+        <dt data-tr="Adres">Address</dt><dd data-tr="Örnek OSB, Sakarya, Türkiye">Sample OSB, Sakarya, Türkiye</dd>
+        <dt data-tr="E-posta">Email</dt><dd>sales@arkonis-metal.example</dd>
+        <dt data-tr="Telefon">Phone</dt><dd>+90 264 000 00 00</dd>
+      </dl>
+    </div>
+    <form id="rfq" novalidate>
+      <label for="f-name"><span data-tr="Ad soyad">Name</span><input id="f-name" name="name" autocomplete="name" required></label>
+      <label for="f-company"><span data-tr="Firma">Company</span><input id="f-company" name="company" autocomplete="organization"></label>
+      <label for="f-email"><span data-tr="E-posta">Email</span><input id="f-email" name="email" type="email" autocomplete="email" required></label>
+      <label for="f-volume"><span data-tr="Yıllık adet">Annual volume</span>
+        <select id="f-volume" name="volume">
+          <option data-tr="1.000'den az">Under 1,000</option>
+          <option>1,000–50,000</option>
+          <option data-tr="50.000'den fazla">Over 50,000</option>
+        </select>
+      </label>
+      <label for="f-msg"><span data-tr="Parça ve malzeme">Part and material</span><textarea id="f-msg" name="message"></textarea></label>
+      <button class="btn primary" type="submit" data-tr="Talebi hazırla">Prepare request</button>
+      <p class="form-note" id="form-note" role="status" data-tr="Bu örnek sitedir; mesaj gönderilmedi. Gerçek sitede form firmanın e-postasına bağlanır.">This is a sample site, so nothing was sent. On a real site the form is connected to the company's inbox.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap" data-tr="Arkonis Metal hayali bir firmadır. Bu sayfa bir web ve içerik örnek çalışmasıdır.">Arkonis Metal is a fictional company. This page is a web and copywriting sample.</div>
+</footer>
+
+<script>
+(function () {
+  var nodes = document.querySelectorAll('[data-tr]');
+  nodes.forEach(function (el) { el.setAttribute('data-en', el.textContent); });
+  function setLang(lang) {
+    nodes.forEach(function (el) {
+      el.textContent = el.getAttribute(lang === 'tr' ? 'data-tr' : 'data-en');
+    });
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+    document.getElementById('btn-tr').setAttribute('aria-pressed', lang === 'tr');
+    try { localStorage.setItem('arkonis-lang', lang); } catch (e) {}
+  }
+  document.getElementById('btn-en').addEventListener('click', function () { setLang('en'); });
+  document.getElementById('btn-tr').addEventListener('click', function () { setLang('tr'); });
+  try { if (localStorage.getItem('arkonis-lang') === 'tr') setLang('tr'); } catch (e) {}
+  document.getElementById('rfq').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('form-note').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
