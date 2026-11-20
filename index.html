@@ -8,6 +8,12 @@
 <meta property="og:title" content="Rosemark · Üreticiler için dijital vitrin">
 <meta property="og:description" content="Ürün görseli, satış metni ve iki dilli web sitesi. Sakarya, Adapazarı.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://rosemarkstudio.github.io/">
+<meta property="og:image" content="https://rosemarkstudio.github.io/assets/paylasim-gorseli.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://rosemarkstudio.github.io/">
 <link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/rosemark-ikon-32px.png">
 <link rel="apple-touch-icon" href="assets/rosemark-ikon-180px.png">
@@ -160,7 +166,8 @@ nav.main a.btn, nav.main a.btn:hover { color: #fff; }
 .gl-card .note { margin: 8px 0 0; font-size: 13px; color: var(--ink-muted); }
 .gl-hint { position: absolute; right: 2%; bottom: 3%; font: 500 11px/16px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
 
-@media (min-width: 961px) and (max-width: 1220px) {
+@media (min-width: 961px) {
+  .gl-card { left: -14%; bottom: -12%; width: min(300px, 58%); }
   .gl-card .lines { display: none; }
 }
 @media (max-width: 960px) {
@@ -170,7 +177,6 @@ nav.main a.btn, nav.main a.btn:hover { color: #fff; }
 @media (max-width: 560px) {
   .gl-label { padding: 6px 8px; font-size: 11px; line-height: 15px; }
   .gl-label span { display: none; }
-  .gl-label[data-node="de"], .gl-label[data-node="shop"] { display: none; }
   .gl-card { position: relative; left: auto; bottom: auto; width: 100%; margin-top: -6%; }
   .gl-hint { display: none; }
 }
@@ -444,6 +450,40 @@ html.intro-on.intro-out .hero .wrap { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+/* küre kartı: hizmetler sırayla döner */
+.gl-num { font: 500 12px/16px var(--font-mono); letter-spacing: .06em; color: var(--ink-muted); }
+.gl-body { transition: opacity .35s ease, transform .5s cubic-bezier(.34,1.56,.64,1); }
+.gl-body.swap { opacity: 0; transform: translateY(10px); }
+.gl-items { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.gl-items li { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 19px; }
+.gl-items li:last-child { border-bottom: 0; }
+.gl-items li::before { content: "→"; color: var(--rose); font-family: var(--font-mono); }
+.gl-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+.gl-foot a { font: 500 13px/18px var(--font-sans); color: var(--rose); text-decoration: none; }
+.gl-foot a:hover { text-decoration: underline; }
+.gl-dots { display: flex; gap: 6px; }
+.gl-dots button { width: 22px; height: 4px; padding: 0; border: 0; border-radius: 4px; background: var(--line); cursor: pointer; position: relative; overflow: hidden; }
+.gl-dots button.on::after { content: ""; position: absolute; inset: 0; background: var(--rose); transform-origin: left; animation: glfill var(--gl-dur, 4.2s) linear forwards; }
+.gl-card:hover .gl-dots button.on::after, .gl-card:focus-within .gl-dots button.on::after { animation-play-state: paused; }
+@keyframes glfill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.gl-label { transition: background .3s, border-color .3s, box-shadow .3s; }
+.gl-label.on { background: rgba(224,20,76,.92); border-color: rgba(255,255,255,.35); box-shadow: 0 10px 26px rgba(224,20,76,.35); }
+.gl-label.on span { color: #ffe3ea; }
+@media (prefers-reduced-motion: reduce) { .gl-dots button.on::after { animation: none; transform: none; } .gl-body { transition: none; } }
+
+/* üzerine gelince renklenen kartlar */
+.glow { position: relative; isolation: isolate; }
+.glow::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1; opacity: 0; transition: opacity .5s ease;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 30%), rgba(255,179,138,.30), rgba(201,184,255,.30) 38%, rgba(189,235,214,.24) 62%, transparent 78%); }
+.glow:hover::before { opacity: 1; }
+.svc.glow, .case.glow { transition: transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .4s, border-color .4s; }
+.svc.glow:hover, .case.glow:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(20,18,24,.08); border-color: #d9d1ea; }
+
+/* kaydırınca yaylanarak beliren bölümler */
+.rv { opacity: 0; transform: translateY(34px); transition: opacity .7s ease, transform 1s cubic-bezier(.34,1.45,.64,1); transition-delay: var(--rv-d, 0s); }
+.rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } .svc.glow:hover, .case.glow:hover { transform: none; } }
 </style>
 <noscript><style>.intro{display:none!important}html.intro-on .hero .wrap{opacity:1;transform:none}</style></noscript>
 </head>
@@ -503,23 +543,26 @@ html.intro-on.intro-out .hero .wrap { opacity: 1; transform: none; }
       </ul>
     </div>
 
-    <div class="globe-stage" id="globe" role="img" aria-label="Temsili arayüz: Sakarya'daki bir üreticinin vitrini Google Haritalar, pazaryeri, Instagram ve yurt dışındaki alıcılara bağlanıyor">
-      <div class="globe-box">
+    <div class="globe-stage" id="globe">
+      <div class="globe-box" role="img" aria-label="Rosemark'ın dört hizmet hattı: Vitrin, İçerik, Strateji ve Ölçüm, Sakarya'dan dünyaya bağlanıyor">
         <div class="globe-halo"></div>
         <div class="globe"></div>
         <canvas class="globe-canvas" id="globe-canvas"></canvas>
-        <div class="gl-label" data-node="sak"><b>Sakarya · üretici</b><span class="rose">vitrin hazırlanıyor</span></div>
-        <div class="gl-label" data-node="maps"><b>Google Haritalar</b><span class="ok">profil yayında</span></div>
-        <div class="gl-label" data-node="shop"><b>Pazaryeri</b><span>6 görsel · yeni başlık</span></div>
-        <div class="gl-label" data-node="ig"><b>Instagram</b><span>haftalık paylaşım</span></div>
-        <div class="gl-label" data-node="de"><b>Almanya · alıcı</b><span>İngilizce sayfa</span></div>
+        <div class="gl-label" data-node="sak"><b>Rosemark · Sakarya</b><span class="rose">tek muhatap</span></div>
+        <div class="gl-label" data-node="de"><b>Vitrin</b><span>iki dilli web sitesi</span></div>
+        <div class="gl-label" data-node="shop"><b>İçerik</b><span>ürün görseli ve metin</span></div>
+        <div class="gl-label" data-node="ig"><b>Strateji</b><span>marka ve sosyal medya</span></div>
+        <div class="gl-label" data-node="maps"><b>Ölçüm</b><span>Google ve aylık rapor</span></div>
         <span class="gl-hint" aria-hidden="true">Sürükleyip çevirin</span>
       </div>
-      <div class="gl-card">
-        <div class="top">Dijital vitrin <span class="chip ok">Ölçülüyor</span></div>
-        <h3>Ürün sayfası yenilendi</h3>
-        <p class="lines">işletmeniz · pazaryeri · ürün sayfası<br>başlık → okunur · görsel → 6 açı</p>
-        <p class="note">Temsili senaryo · Arayüz önizlemesi</p>
+      <div class="gl-card" id="gl-card" aria-live="polite">
+        <div class="top"><span class="gl-num" id="gl-num">01 / 04</span> <span class="chip" id="gl-tag">Web ve platform</span></div>
+        <div class="gl-body" id="gl-body">
+          <h3 id="gl-title">Vitrin</h3>
+          <p class="lines" id="gl-desc">Alıcınızın sizi ilk gördüğü yer: hızlı, güven veren ve ölçülebilir.</p>
+          <ul class="gl-items" id="gl-items"><li>İki dilli kurumsal web sitesi</li><li>Google İşletme Profili ve harita görünürlüğü</li><li>LinkedIn şirket sayfası ve platform mağaza vitrini</li></ul>
+        </div>
+        <div class="gl-foot"><div class="gl-dots" id="gl-dots" role="tablist" aria-label="Hizmetler"><button type="button" role="tab" aria-label="Vitrin" class="on"></button><button type="button" role="tab" aria-label="İçerik"></button><button type="button" role="tab" aria-label="Strateji"></button><button type="button" role="tab" aria-label="Ölçüm"></button></div><a href="#hizmetler">Hizmetlere bak →</a></div>
       </div>
     </div>
   </div>
@@ -870,7 +913,7 @@ html.intro-on.intro-out .hero .wrap { opacity: 1; transform: none; }
       out.push([(a[0] * k1 + b[0] * k2) * lift, (a[1] * k1 + b[1] * k2) * lift, (a[2] * k1 + b[2] * k2) * lift]); }
     return out;
   }
-  var arcs = ['maps', 'de', 'shop', 'ig'].map(function (k, n) { return { pts: arc(nodes.sak, nodes[k]), off: n * 0.23 }; });
+  var arcs = ['maps', 'de', 'shop', 'ig'].map(function (k, n) { return { key: k, pts: arc(nodes.sak, nodes[k]), off: n * 0.23 }; });
   var W = 0, R = 0, cx = 0, cy = 0, dpr = 1, sizes = {};
   function resize() {
     var b = cv.getBoundingClientRect(); if (!b.width) return;
@@ -899,7 +942,7 @@ html.intro-on.intro-out .hero .wrap { opacity: 1; transform: none; }
       ctx.beginPath(); var open = false;
       for (var j = 0; j < a.pts.length; j++) { var q = proj(a.pts[j][0], a.pts[j][1], a.pts[j][2]);
         if (q[2] < -0.02) { open = false; continue; } if (open) ctx.lineTo(q[0], q[1]); else { ctx.moveTo(q[0], q[1]); open = true; } }
-      ctx.strokeStyle = 'rgba(201,184,255,0.7)'; ctx.stroke();
+      var act = window.rmActiveNode === a.key; ctx.lineWidth = act ? 2.2 : 1.2; ctx.strokeStyle = act ? 'rgba(255,92,138,0.95)' : 'rgba(201,184,255,0.55)'; ctx.stroke(); ctx.lineWidth = 1.2;
       if (!reduce) { var u = ((now / 3400) + a.off) % 1, idx = Math.floor(u * 48), m = u * 48 - idx, A = a.pts[idx], B = a.pts[Math.min(48, idx + 1)];
         var q2 = proj(A[0] + (B[0] - A[0]) * m, A[1] + (B[1] - A[1]) * m, A[2] + (B[2] - A[2]) * m);
         if (q2[2] > 0) { ctx.fillStyle = 'rgba(189,235,214,0.35)'; ctx.beginPath(); ctx.arc(q2[0], q2[1], 6, 0, 6.2832); ctx.fill();
@@ -1106,6 +1149,107 @@ var EMAIL = 'rosemarkstudio@gmail.com';
     if (EMAIL) sendMail.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Rosemark: ' + (firma || ad)) + '&body=' + encodeURIComponent(text);
     note.textContent = (!WHATSAPP && !EMAIL) ? 'İletişim bilgileri yakında eklenecek.' : '';
     ready.classList.add('show');
+  });
+})();
+</script>
+<script>
+/* Küre kartı: dört hizmet sırayla gösterilir; noktaya tıklanınca o hizmete geçer, üzerine gelince durur */
+(function () {
+  var card = document.getElementById('gl-card'); if (!card) return;
+  var S = [
+    { node: 'de', title: 'Vitrin', tag: 'Web ve platform', desc: 'Alıcınızın sizi ilk gördüğü yer: hızlı, güven veren ve ölçülebilir.', items: ['İki dilli kurumsal web sitesi', 'Google İşletme Profili ve harita görünürlüğü', 'LinkedIn şirket sayfası ve platform mağaza vitrini'] },
+    { node: 'shop', title: 'İçerik', tag: 'Görsel ve metin', desc: 'Ürünü satılır kılan görseller ve metinler. Ürün gerçek, ortam yapay zekâyla.', items: ['Ürün sayfası seti: 6–8 görsel, başlık, açıklama', 'Aylık sosyal medya ve kampanya içeriği', 'Katalog, fuar sunumu, İngilizce ilan metni'] },
+    { node: 'ig', title: 'Strateji', tag: 'Marka ve iletişim', desc: 'Ne söyleyeceğinizi ve kime söyleyeceğinizi netleştiririz.', items: ['Marka konumlandırma ve kurumsal kimlik', 'Ses tonu rehberi, basın bülteni, kurumsal metin', 'İtibar ve kriz iletişimi planı'] },
+    { node: 'maps', title: 'Ölçüm', tag: 'Veri ve rapor', desc: 'Yapılan işin işe yarayıp yaramadığını rakamla görürsünüz.', items: ['Ziyaretçi analizi kurulumu', 'Reklam yönetimi ve A/B testi', 'Aylık tek sayfalık performans raporu'] }
+  ];
+  var DUR = 4200, i = 0, timer = null, paused = false;
+  var body = document.getElementById('gl-body'), dots = document.querySelectorAll('#gl-dots button');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  card.style.setProperty('--gl-dur', DUR + 'ms');
+  function mark(k) { document.querySelectorAll('.gl-label').forEach(function (el) { el.classList.toggle('on', el.getAttribute('data-node') === k); }); window.rmActiveNode = k; }
+  function fill(n) {
+    var d = S[n];
+    document.getElementById('gl-num').textContent = '0' + (n + 1) + ' / 04';
+    document.getElementById('gl-tag').textContent = d.tag;
+    document.getElementById('gl-title').textContent = d.title;
+    document.getElementById('gl-desc').textContent = d.desc;
+    document.getElementById('gl-items').innerHTML = d.items.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    dots.forEach(function (b, j) { b.classList.remove('on'); b.setAttribute('aria-selected', j === n ? 'true' : 'false'); });
+    void dots[n].offsetWidth; dots[n].classList.add('on');
+    mark(d.node);
+  }
+  function go(n) {
+    i = (n + S.length) % S.length;
+    if (reduce) { fill(i); return; }
+    body.classList.add('swap');
+    setTimeout(function () { fill(i); body.classList.remove('swap'); }, 260);
+  }
+  function schedule() { clearTimeout(timer); if (!paused && !reduce) timer = setTimeout(function () { go(i + 1); schedule(); }, DUR); }
+  dots.forEach(function (b, j) { b.addEventListener('click', function () { go(j); schedule(); }); });
+  card.addEventListener('mouseenter', function () { paused = true; clearTimeout(timer); });
+  card.addEventListener('mouseleave', function () { paused = false; go(i); schedule(); });
+  card.addEventListener('focusin', function () { paused = true; clearTimeout(timer); });
+  card.addEventListener('focusout', function () { paused = false; schedule(); });
+  fill(0); schedule();
+})();
+
+/* Üzerine gelince renklenen kartlar: renk imleci takip eder */
+(function () {
+  var els = document.querySelectorAll('.svc, .values > div, .case, .steps > li');
+  els.forEach(function (el) {
+    el.classList.add('glow');
+    el.addEventListener('pointermove', function (e) { var b = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - b.left) + 'px'); el.style.setProperty('--my', (e.clientY - b.top) + 'px'); });
+  });
+})();
+
+/* Kaydırınca beliren bölümler, yaylanma etkisiyle */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var groups = document.querySelectorAll('main section .sec-head, main section .values > div, main section .svc, main section .case, main section .steps > li, main section details');
+  groups.forEach(function (el) {
+    var sib = el.parentNode ? Array.prototype.indexOf.call(el.parentNode.children, el) : 0;
+    el.style.setProperty('--rv-d', Math.min(sib, 5) * 0.08 + 's'); el.classList.add('rv');
+  });
+  var io = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  groups.forEach(function (el) { io.observe(el); });
+})();
+
+/* Yumuşak kaydırma: fare tekerleğinde sayfa yaylanarak süzülür (dokunmatik ekranlarda ve hareket azaltma tercihinde kapalı) */
+(function () {
+  var mq = window.matchMedia;
+  if (!mq || mq('(prefers-reduced-motion: reduce)').matches || !mq('(pointer: fine)').matches) return;
+  var root = document.documentElement, target = window.scrollY, cur = window.scrollY, raf = null, ease = 0.085;
+  root.style.scrollBehavior = 'auto';
+  function max() { return Math.max(0, root.scrollHeight - window.innerHeight); }
+  function tick() {
+    cur += (target - cur) * ease;
+    if (Math.abs(target - cur) < 0.5) { cur = target; window.scrollTo(0, cur); raf = null; return; }
+    window.scrollTo(0, cur); raf = requestAnimationFrame(tick);
+  }
+  function run() { if (!raf) raf = requestAnimationFrame(tick); }
+  function scrollable(el) {
+    for (; el && el !== document.body && el !== root; el = el.parentElement) {
+      var st = getComputedStyle(el); if (/(auto|scroll)/.test(st.overflowY) && el.scrollHeight > el.clientHeight) return true;
+    }
+    return false;
+  }
+  window.addEventListener('wheel', function (e) {
+    if (e.ctrlKey || e.defaultPrevented || root.classList.contains('intro-on') || scrollable(e.target)) return;
+    e.preventDefault();
+    var d = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? window.innerHeight : 1);
+    if (!raf) { cur = window.scrollY; target = cur; }
+    target = Math.max(0, Math.min(max(), target + d)); run();
+  }, { passive: false });
+  window.addEventListener('scroll', function () { if (!raf) { cur = target = window.scrollY; } }, { passive: true });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+    var id = a.getAttribute('href'); if (id.length < 2) return;
+    var el = document.querySelector(id); if (!el) return;
+    e.preventDefault();
+    var head = document.querySelector('header'); var off = head ? head.offsetHeight + 8 : 0;
+    cur = window.scrollY; target = Math.max(0, Math.min(max(), el.getBoundingClientRect().top + window.scrollY - off)); run();
+    history.pushState(null, '', id);
   });
 })();
 </script>
